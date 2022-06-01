@@ -1,0 +1,10 @@
+{
+  "name": "bo",
+  "version": "1.0.0",
+  "main": "index.js",
+  "author": "Efen Stakes <efenstakes101@gmail.com>",
+  "license": "MIT",
+  "dependencies": {
+    "babylonjs": "^5.8.2"
+  }
+}
