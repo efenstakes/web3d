@@ -1,4 +1,19 @@
 
+* {
+    padding: 0;
+    margin: 0;
+    box-sizing: border-box;
+}
+
+
+body {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+
+
 canvas {
     width: 90vw;
     height: 80vh;
@@ -7,4 +22,9 @@ canvas {
 
     background-color: aquamarine;
     border-radius: 10px;
+}
+
+
+.v_space {
+    height: 1rem;
 }
