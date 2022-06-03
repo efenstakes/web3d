@@ -1,0 +1,10 @@
+
+canvas {
+    width: 90vw;
+    height: 80vh;
+
+    margin: 0 auto;
+
+    background-color: aquamarine;
+    border-radius: 10px;
+}
