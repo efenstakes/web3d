@@ -35,3 +35,8 @@ const cube = BL.MeshBuilder.CreateBox(
 
 
 engine.runRenderLoop(()=> scene.render())
+
+
+
+// resize engine when window resizes
+window.addEventListener("resize", ()=> engine.resize())
