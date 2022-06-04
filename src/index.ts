@@ -164,6 +164,19 @@ sprite.position.y = 20
 sprite.isPickable = true
 
 
+
+scene.onPointerDown = function(evt) {
+    const pickedResult = scene.pickSprite(this.pointerX, this.pointerY) 
+    console.log("pickedResult ", pickedResult)
+    
+    if( pickedResult.hit ) {
+        pickedResult.pickedSprite.angle += 1
+    }
+}
+
+
+
+
 // animations here
 scene.registerBeforeRender(()=> {
     torus.rotation.y += .01
