@@ -22,11 +22,32 @@ scene.ambientColor = new B.Color3(0.3, 0.3, 0.3)
 
 
 // create light
-const light = new B.HemisphericLight("Light", B.Vector3.Zero(), scene)
+const light0 = new B.HemisphericLight("Light", B.Vector3.Zero(), scene)
+light0.diffuse = new B.Color3(1, 0, 0) // sky color
+light0.specular = new B.Color3(0, 1, 0)
+light0.groundColor = new B.Color3(0, 0, 0)  // ground color
 
+// const light = new B.PointLight("light", new B.Vector3(0, 10, 10), scene)
+// const light = new B.DirectionalLight("light", new B.Vector3(0, -1, 0), scene)
+
+// position
+// direction
+// angle
+// exponent
+const light = new B.SpotLight(
+    "Light", 
+    new B.Vector3(0, 30, 0),  // position
+    new B.Vector3(0, -1, 0),  // direction
+    0.8,  // angle
+    2,  // exponent
+    scene
+)
+light.diffuse = new B.Color3(0, 1, 0)
+light.specular = new B.Color3(1, 0, 1)
 
 // create camera
-const camera = new B.ArcRotateCamera("Camera", 1, 1, 20, B.Vector3.Zero(), scene)
+const camera = new B.ArcRotateCamera("Camera", 1, 2, 30, B.Vector3.Zero(), scene)
+// const camera = new B.WebVRFreeCamera("WebVRFreeCamera", new B.Vector3(0, 10, -30), scene)
 camera.attachControl(true)
 camera.upperBetaLimit = Math.PI / 2.1
 camera.lowerRadiusLimit = 4
@@ -217,13 +238,17 @@ scene.onPointerDown = function(evt) {
         // particlSystm.start()
     }
 }
+// scene.onPointerDown = function(evt, pickedResult) {    
+//     torus.position.x = pickedResult.pickedPoint.x
+// }
 
 
 
 
 // animations here
 scene.registerBeforeRender(()=> {
-    torus.rotation.y += .01
+    // torus.rotation.y += .01
+    camera.alpha += .01
 })
 
 engine.runRenderLoop(()=> scene.render())
