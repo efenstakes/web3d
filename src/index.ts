@@ -1,4 +1,4 @@
-import * as BL from 'babylonjs'
+import * as B from 'babylonjs'
 
 
 // the canvas
@@ -8,13 +8,13 @@ console.log("canvasEL ", canvasEL)
 console.log("hola from ts ")
 
 // create engine
-const engine = new BL.Engine(canvasEL as HTMLCanvasElement)
+const engine = new B.Engine(canvasEL as HTMLCanvasElement)
 
 
 // create scene
-const scene = new BL.Scene(engine, {})
-scene.clearColor = new BL.Color4(0.5, 0.8, 0.5, .2)
-scene.ambientColor = new BL.Color3(0.3, 0.3, 0.3)
+const scene = new B.Scene(engine, {})
+scene.clearColor = new B.Color4(0.5, 0.8, 0.5, .2)
+scene.ambientColor = new B.Color3(0.3, 0.3, 0.3)
 // add fog
 // scene.fogMode = BABYLON.Scene.FOGMODE_EXP
 // scene.fogDensity = .01
@@ -22,31 +22,31 @@ scene.ambientColor = new BL.Color3(0.3, 0.3, 0.3)
 
 
 // create light
-const light = new BL.HemisphericLight("Light", BL.Vector3.Zero(), scene)
+const light = new B.HemisphericLight("Light", B.Vector3.Zero(), scene)
 
 
 // create camera
-const camera = new BL.ArcRotateCamera("Camera", 1, 1, 20, BL.Vector3.Zero(), scene)
+const camera = new B.ArcRotateCamera("Camera", 1, 1, 20, B.Vector3.Zero(), scene)
 camera.attachControl(true)
 camera.upperBetaLimit = Math.PI / 2.1
 camera.lowerRadiusLimit = 4
 
-var light2 = new BL.HemisphericLight("light1", new BL.Vector3(0, 1, 0), scene);
+var light2 = new B.HemisphericLight("light1", new B.Vector3(0, 1, 0), scene);
 light2.intensity = 0.7
 
 
 // ground
-const ground = BL.MeshBuilder.CreateGround(
+const ground = B.MeshBuilder.CreateGround(
     "ground", { width: 400, height: 400, updatable: true, subdivisions: 5 }, scene
 )
-const groundMaterial = new BL.StandardMaterial("groundMaterial", scene)
-groundMaterial.diffuseTexture = new BL.Texture("../assets/tile.jpg")
+const groundMaterial = new B.StandardMaterial("groundMaterial", scene)
+groundMaterial.diffuseTexture = new B.Texture("../assets/tile.jpg")
 ground.material = groundMaterial
 
 // create cylinder
 // new Array(10).fill(0).map((_, index: number)=> {
 
-//     const cylinder = BL.MeshBuilder.CreateCylinder(
+//     const cylinder = B.MeshBuilder.CreateCylinder(
 //         "Cylinder",
 //         {
 //             height: 3, diameter: 1, tessellation: 6
@@ -62,27 +62,27 @@ ground.material = groundMaterial
 
 
 // disc
-// const disc = BL.MeshBuilder.CreateDisc(
+// const disc = B.MeshBuilder.CreateDisc(
 //     "disc", { radius: 20, tessellation: 24 }, scene
 // )
 
 
 // torus 
-const torus = BL.MeshBuilder.CreateTorus(
+const torus = B.MeshBuilder.CreateTorus(
     "torus", { diameter: 4, thickness: 1, tessellation: 5 }, scene
 )
 torus.position.y = 4
 torus.rotation.x = 90
-const torusMaterial = new BL.StandardMaterial("TorusMat", scene)
-// torusMaterial.diffuseColor = new BL.Color3(1, 0, .4)
-torusMaterial.diffuseTexture = new BL.Texture("../assets/ring.png")
+const torusMaterial = new B.StandardMaterial("TorusMat", scene)
+// torusMaterial.diffuseColor = new B.Color3(1, 0, .4)
+torusMaterial.diffuseTexture = new B.Texture("../assets/ring.png")
 torusMaterial.ambientColor = new BABYLON.Color3(1, 0, 0)
 // set transparency
 // torusMaterial.alpha = .5
 torus.material = torusMaterial
 
 // create cube
-// const cube = BL.MeshBuilder.CreateBox(
+// const cube = B.MeshBuilder.CreateBox(
 //     "Box", 
 //     { width: 2, height: 2, depth: 2 },
 //     scene
@@ -92,28 +92,28 @@ torus.material = torusMaterial
 
 // tube
 // const paths = [
-//     new BL.Vector3(-5, 0, 0),
-//     new BL.Vector3(5, 0, 0),
-//     new BL.Vector3(0, 0, -5),
-//     new BL.Vector3(0, 5, 0)
+//     new B.Vector3(-5, 0, 0),
+//     new B.Vector3(5, 0, 0),
+//     new B.Vector3(0, 0, -5),
+//     new B.Vector3(0, 5, 0)
 //  ]
-// const tube = BL.MeshBuilder.CreateTube(
+// const tube = B.MeshBuilder.CreateTube(
 //     "tube", { radius: 20, tessellation: 10, paths: paths }, scene
 // )
 
 
 
 // skybox
-// const skybox = BL.MeshBuilder.CreateBox(
+// const skybox = B.MeshBuilder.CreateBox(
 //     "skybox", { width: 100, height: 100, depth: 100, }, scene
 // )
-// const skyboxMat = new BL.StandardMaterial("skyboxMat", scene)
+// const skyboxMat = new B.StandardMaterial("skyboxMat", scene)
 // skyboxMat.backFaceCulling = false
-// skyboxMat.reflectionTexture = new BL.CubeTexture("../assets/skybox", scene)
-// skyboxMat.reflectionTexture.coordinatesMode = BL.Texture.SKYBOX_MODE
-// skyboxMat.diffuseColor = new BL.Color3(0, 0, 0)
-// skyboxMat.specularColor = new BL.Color3(0, 0, 0)
-// skyboxMat.disableLighting = true
+// skyboxMat.reflectionTexture = new B.CubeTexture("../assets/skybox", scene)
+// skyboxMat.reflectionTexture.coordinatesMode = B.Texture.SKYBOX_MODE
+// skyboxMat.diffuseColor = new B.Color3(0, 0, 0)
+// skyboxMat.specularColor = new B.Color3(0, 0, 0)
+// skyboxMat.disaBeLighting = true
 // skybox.material = skyboxMat
 
 
@@ -121,12 +121,12 @@ torus.material = torusMaterial
 
 
 // animation
-// const anim = new BL.Animation(
+// const anim = new B.Animation(
 //     "anim", 
 //     "scale.y", 
 //     30, 
-//     BL.Animation.ANIMATIONTYPE_FLOAT, 
-//     BL.Animation.ANIMATIONLOOPMODE_CYCLE
+//     B.Animation.ANIMATIONTYPE_FLOAT, 
+//     B.Animation.ANIMATIONLOOPMODE_CYCLE
 // )
 // anim.setKeys([
 //     { frame: 0, value: 1},
@@ -145,12 +145,12 @@ torus.material = torusMaterial
 
 
 // sprites
-const spriteManager = new BL.SpriteManager(
+const spriteManager = new B.SpriteManager(
     "spriteManager", "../assets/ring.png", 2, 2000, scene
 )
 spriteManager.isPickable = true
 
-const sprite = new BL.Sprite("sprite", spriteManager)
+const sprite = new B.Sprite("sprite", spriteManager)
 // sets width & height to same value
 // sprite.size = 10  
 sprite.width = 10
@@ -165,12 +165,56 @@ sprite.isPickable = true
 
 
 
+
+
+
+// particle system
+const particlSystm = new B.ParticleSystem(
+    "particlSystm", 20000, scene
+)
+
+particlSystm.particleTexture = new B.Texture("../assets/ring.png")
+particlSystm.textureMask = new B.Color4(0.1, 0.8, 0.8, 1.0) // B.Color4(1, 0, 0, 1) // B.Color4(0.1, 0.8, 0.8, 1.0)
+particlSystm.emitter = torus
+particlSystm.color1 = new B.Color4(1, 0, 0, 1)
+particlSystm.color2 = new B.Color4(0, 1, 1, 1)
+particlSystm.colorDead = new B.Color4(0, 0, 0.2, 0.0)
+
+particlSystm.minSize = .2
+particlSystm.maxSize = .6
+particlSystm.minLifeTime = .5
+particlSystm.maxLifeTime = 1.5
+
+particlSystm.emitRate = 1500
+particlSystm.minEmitPower = 1
+particlSystm.maxEmitPower = 3
+
+particlSystm.updateSpeed = .005
+
+particlSystm.minAngularSpeed = 0
+particlSystm.maxAngularSpeed = Math.PI
+
+particlSystm.blendMode = B.ParticleSystem.BLENDMODE_ONEONE
+particlSystm.gravity = new B.Vector3(1, 98, 1)
+
+particlSystm.direction1 = new B.Vector3(-7, 8, 3)
+particlSystm.direction2 = new B.Vector3(7, 8, -3)
+
+particlSystm.minEmitBox = new B.Vector3(-1, 0, 0) // Starting all from
+particlSystm.maxEmitBox = new B.Vector3(1, 0, 0) // to
+
+particlSystm.start()
+
+
+
+
 scene.onPointerDown = function(evt) {
     const pickedResult = scene.pickSprite(this.pointerX, this.pointerY) 
-    console.log("pickedResult ", pickedResult)
+    // console.log("pickedResult ", pickedResult)
     
     if( pickedResult.hit ) {
         pickedResult.pickedSprite.angle += 1
+        // particlSystm.start()
     }
 }
 
