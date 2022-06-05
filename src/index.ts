@@ -210,6 +210,18 @@ cube2.receiveShadows = true
 
 
 
+
+
+// mesh instances
+
+// creates new instance
+const cube2Instance = cube2.createInstance("cube2Instance")
+cube2Instance.position.y = 12
+
+
+
+
+
 // particle system
 const particlSystm = new B.ParticleSystem(
     "particlSystm", 20000, scene
@@ -332,38 +344,38 @@ particlSystm.start()
 
 
 // asset manager
-const assetMan = new B.AssetsManager(scene)
+// const assetMan = new B.AssetsManager(scene)
 
 
 // load mesh
-var meshTask = assetMan.addMeshTask("skull task", "", "scenes/", "skull.babylon")
-meshTask.onSuccess = function(task) {
-    console.log("meshTask loaded");
-}	
-meshTask.onError = (task, msg, exception)=> {
-    console.log( "meshTask error ", msg, " exception ", exception )
-}
+// var meshTask = assetMan.addMeshTask("skull task", "", "scenes/", "skull.babylon")
+// meshTask.onSuccess = function(task) {
+//     console.log("meshTask loaded");
+// }	
+// meshTask.onError = (task, msg, exception)=> {
+//     console.log( "meshTask error ", msg, " exception ", exception )
+// }
 
-var imageTask = assetMan.addImageTask("image_task", "assets/sky.jpg");
-imageTask.onSuccess = function(task) {
-    console.log("imageTask loades width ", task.image.width);
-}	
-imageTask.onError = (task, msg, exception)=> {
-    console.log( "imageTask error ", msg, " exception ", exception )
-}
+// load image
+// var imageTask = assetMan.addImageTask("image_task", "assets/sky.jpg");
+// imageTask.onSuccess = function(task) {
+//     console.log("imageTask loades width ", task.image.width);
+// }	
+// imageTask.onError = (task, msg, exception)=> {
+//     console.log( "imageTask error ", msg, " exception ", exception )
+// }
 
+// load text File
+// const textFileTask = assetMan.addTextFileTask("textFileTask", "test.txt")
+// textFileTask.onSuccess = (task)=> {
+//     console.log("loaded our file ", task.text)
+// }
+// textFileTask.onError = (task, msg, exception)=> {
+//     console.log( "textFileTask error ", msg, " exception ", exception )
+// }
 
-
-const textFileTask = assetMan.addTextFileTask("textFileTask", "test.txt")
-textFileTask.onSuccess = (task)=> {
-    console.log("loaded our file ", task.text)
-}
-textFileTask.onError = (task, msg, exception)=> {
-    console.log( "textFileTask error ", msg, " exception ", exception )
-}
-
-
-assetMan.loadAsync()
+// load assets
+// assetMan.loadAsync()
 
 
 // scene.onPointerDown = function(evt) {
