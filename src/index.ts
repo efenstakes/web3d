@@ -89,18 +89,18 @@ ground.material = groundMaterial
 
 
 // torus 
-const torus = B.MeshBuilder.CreateTorus(
-    "torus", { diameter: 4, thickness: 1, tessellation: 5 }, scene
-)
-torus.position.y = 4
-torus.rotation.x = 90
+// const torus = B.MeshBuilder.CreateTorus(
+//     "torus", { diameter: 4, thickness: 1, tessellation: 5 }, scene
+// )
+// torus.position.y = 4
+// torus.rotation.x = 90
 const torusMaterial = new B.StandardMaterial("TorusMat", scene)
 // torusMaterial.diffuseColor = new B.Color3(1, 0, .4)
 torusMaterial.diffuseTexture = new B.Texture("../assets/ring.png")
 torusMaterial.ambientColor = new BABYLON.Color3(1, 0, 0)
 // set transparency
 // torusMaterial.alpha = .5
-torus.material = torusMaterial
+// torus.material = torusMaterial
 
 // create cube
 // const cube = B.MeshBuilder.CreateBox(
@@ -187,6 +187,22 @@ sprite.isPickable = true
 
 
 
+// cube 1
+const cube1 = B.MeshBuilder.CreateBox("cube1", { width: 2, height: 2, depth: 2 }, scene)
+cube1.position.y = 1
+cube1.position.z = 5
+
+const cube1Mat = new B.StandardMaterial("cube1Mat", scene)
+cube1Mat.diffuseColor = new B.Color3(0, 0, 1)
+cube1.material = cube1Mat
+
+// cube 2
+const cube2 = B.MeshBuilder.CreateBox("cube1", { width: 5, height: 5, depth: 5 }, scene)
+cube2.position.y = 2.5
+cube2.position.z = 0
+
+
+
 
 
 // particle system
@@ -196,7 +212,7 @@ const particlSystm = new B.ParticleSystem(
 
 particlSystm.particleTexture = new B.Texture("../assets/ring.png")
 particlSystm.textureMask = new B.Color4(0.1, 0.8, 0.8, 1.0) // B.Color4(1, 0, 0, 1) // B.Color4(0.1, 0.8, 0.8, 1.0)
-particlSystm.emitter = torus
+particlSystm.emitter = cube1
 particlSystm.color1 = new B.Color4(1, 0, 0, 1)
 particlSystm.color2 = new B.Color4(0, 1, 1, 1)
 particlSystm.colorDead = new B.Color4(0, 0, 0.2, 0.0)
@@ -248,7 +264,18 @@ scene.onPointerDown = function(evt) {
 // animations here
 scene.registerBeforeRender(()=> {
     // torus.rotation.y += .01
-    camera.alpha += .01
+    // camera.alpha += .01
+    cube1.position.z -= .02
+
+    if( cube1.intersectsMesh(cube2, false) ) {
+        console.log("collided")
+        // cube1.material.alpha += 2
+        cube1Mat.diffuseColor = new B.Color3(1, 0, 0)
+    } else {
+        // cube1.material.alpha -= .5
+        cube1Mat.diffuseColor = new B.Color3(0, 0, 1)
+    }
+
 })
 
 engine.runRenderLoop(()=> scene.render())
