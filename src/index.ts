@@ -186,7 +186,6 @@ sprite.isPickable = true
 
 
 
-
 // cube 1
 const cube1 = B.MeshBuilder.CreateBox("cube1", { width: 2, height: 2, depth: 2 }, scene)
 cube1.position.y = 1
@@ -199,14 +198,14 @@ cube1.material = cube1Mat
 
 
 // cube 2
-const cube2 = B.MeshBuilder.CreateBox("cube1", { width: 2, height: 8, depth: 2 }, scene)
-cube2.position.y = 2.5
-cube2.position.z = 7
-cube2.position.x  = 12
-cube2.material = cube1Mat
+// const cube2 = B.MeshBuilder.CreateBox("cube1", { width: 10, height: 8, depth: 10 }, scene)
+// cube2.position.y = 2
+// cube2.position.z = 7
+// cube2.position.x  = 12
+// // cube2.material = cube1Mat
 
-// to receive shadows
-cube2.receiveShadows = true
+// // to receive shadows
+// cube2.receiveShadows = true
 
 
 
@@ -215,9 +214,36 @@ cube2.receiveShadows = true
 // mesh instances
 
 // creates new instance
-const cube2Instance = cube2.createInstance("cube2Instance")
-cube2Instance.position.y = 12
+// const cube2Instance = cube2.createInstance("cube2Instance")
+// cube2Instance.position.y = 12
 
+
+
+// dynamic texture --- TEXT
+const dTexture = new B.DynamicTexture("dTexture", { width: 512, height: 256 }, scene)
+
+// @param text — defines the text to be drawn
+// @param x — defines the placement of the text from the left
+// @param y — defines the placement of the text from the top when invertY is true and from the bottom when false
+// @param font — defines the font to be used with font-style, font-size, font-name
+// @param color — defines the color used for the text
+// @param clearColor — defines the color for the canvas, use null to not overwrite canvas
+// @param invertY — defines the direction for the Y axis (default is true - y increases downwards)
+// @param update — defines whether texture is immediately update (default is true)
+// dTexture.drawText("Hola Mi Amor", 20, 150, "bold 60px Arial", "green", "white", true, true)
+
+
+
+const sphere = B.MeshBuilder.CreateSphere(
+    "sphere", { diameter: 20, segments: 120, }, scene
+)
+sphere.position.y = 10
+sphere.rotation.x = Math.PI
+
+
+var cube2Mat = new B.StandardMaterial("cube2Mat", scene)
+cube2Mat.diffuseTexture = dTexture
+sphere.material = cube2Mat
 
 
 
@@ -257,7 +283,7 @@ particlSystm.direction2 = new B.Vector3(7, 8, -3)
 particlSystm.minEmitBox = new B.Vector3(-1, 0, 0) // Starting all from
 particlSystm.maxEmitBox = new B.Vector3(1, 0, 0) // to
 
-particlSystm.start()
+// particlSystm.start()
 
 
 
