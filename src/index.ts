@@ -42,7 +42,7 @@ const light = new B.SpotLight(
     2,  // exponent
     scene
 )
-light.diffuse = new B.Color3(0, 1, 0)
+light.diffuse = new B.Color3(0, 1, 0) // B.Color3.Purple()
 light.specular = new B.Color3(1, 0, 1)
 
 // create camera
@@ -191,11 +191,11 @@ sprite.isPickable = true
 const cube1 = B.MeshBuilder.CreateBox("cube1", { width: 2, height: 2, depth: 2 }, scene)
 cube1.position.y = 1
 cube1.position.z = 5
-cube1.isPickable = false
+cube1.isPickable = true
 
 const cube1Mat = new B.StandardMaterial("cube1Mat", scene)
 cube1Mat.diffuseColor = new B.Color3(0, 0, 1)
-// cube1.material = cube1Mat
+cube1.material = cube1Mat
 
 
 // cube 2
@@ -262,15 +262,108 @@ particlSystm.start()
 
 
 // highlight layers
-const highlightLayer = new B.HighlightLayer("highlightLayer", scene)
-highlightLayer.addMesh(cube2, B.Color3.Yellow(), true)
-highlightLayer.addMesh(cube1, B.Color3.Purple())
+// const highlightLayer = new B.HighlightLayer("highlightLayer", scene)
+// highlightLayer.addMesh(cube2, B.Color3.Yellow(), true)
+// highlightLayer.addMesh(cube1, B.Color3.Purple())
 
 
 
 
 
 
+// action manager
+// cube1.actionManager = new B.ActionManager(scene)
+
+// cube1.actionManager.registerAction(
+//     new B.InterpolateValueAction(
+//         // triger when mouse goes over
+//         B.ActionManager.OnPickTrigger, 
+//         // the mesh we are targetting ! can be any mesh
+//         light,                                
+//         // the property we are to upate on the mesh
+//         "diffuse",                              
+//         // the new value to set for the mesh property above
+//         B.Color3.Purple(),               
+//         // duration it takes to interpolate
+//         2000,                                 
+//         // condition to interpolate
+//         null,                                 
+//         // whether to stop other animations or not. false means dont stop
+//         false,                                
+//         // function to call after interpolation is finished
+//         ()=> {
+//             console.log("done animating light")
+//         }
+//     )
+// ).then(
+//     new B.InterpolateValueAction(
+//         B.ActionManager.NothingTrigger,
+//         light,
+//         "diffuse",
+//         B.Color3.Yellow()
+//     )
+// )
+// cube2.actionManager = new B.ActionManager(scene)
+// cube2.actionManager.registerAction(
+//     new B.InterpolateValueAction(
+//         // triger when mouse goes over
+//         B.ActionManager.OnPointerOverTrigger, 
+//         // the mesh we are targetting ! can be any mesh
+//         cube2,                                
+//         // the property we are to upate on the mesh
+//         "scaling",                              
+//         // the new value to set for the mesh property above
+//         new B.Vector3(1.2, 1, 1.2),               
+//         // duration it takes to interpolate
+//         2000,                                 
+//         // condition to interpolate
+//         null,                                 
+//         // whether to stop other animations or not. false means dont stop
+//         false,                                
+//         // function to call after interpolation is finished
+//         ()=> {
+//             console.log("done animating cube2")
+//             setTimeout(()=> cube2.scaling = new B.Vector3(1, 1, 1), 4000)
+//         }
+//     )
+// )
+
+
+
+
+// asset manager
+const assetMan = new B.AssetsManager(scene)
+
+
+// load mesh
+var meshTask = assetMan.addMeshTask("skull task", "", "scenes/", "skull.babylon")
+meshTask.onSuccess = function(task) {
+    console.log("meshTask loaded");
+}	
+meshTask.onError = (task, msg, exception)=> {
+    console.log( "meshTask error ", msg, " exception ", exception )
+}
+
+var imageTask = assetMan.addImageTask("image_task", "assets/sky.jpg");
+imageTask.onSuccess = function(task) {
+    console.log("imageTask loades width ", task.image.width);
+}	
+imageTask.onError = (task, msg, exception)=> {
+    console.log( "imageTask error ", msg, " exception ", exception )
+}
+
+
+
+const textFileTask = assetMan.addTextFileTask("textFileTask", "test.txt")
+textFileTask.onSuccess = (task)=> {
+    console.log("loaded our file ", task.text)
+}
+textFileTask.onError = (task, msg, exception)=> {
+    console.log( "textFileTask error ", msg, " exception ", exception )
+}
+
+
+assetMan.loadAsync()
 
 
 // scene.onPointerDown = function(evt) {
@@ -338,23 +431,23 @@ highlightLayer.addMesh(cube1, B.Color3.Purple())
 
 
 // highlight layers
-var alpha = 0
-scene.registerBeforeRender(()=> {
-    alpha += 0.06
+// var alpha = 0
+// scene.registerBeforeRender(()=> {
+//     alpha += 0.06
 
-    const dateMillis = Date.now()
+//     const dateMillis = Date.now()
 
-    if( dateMillis % 5 === 0 ) {
-        highlightLayer.outerGlow = false
-        highlightLayer.innerGlow = false
-    } else {
-        highlightLayer.outerGlow = true
-        highlightLayer.innerGlow = true
-    }
-    
-    highlightLayer.blurHorizontalSize = 0.3 + Math.cos(alpha) * 0.6 + 0.6;		
-    highlightLayer.blurVerticalSize = 0.3 + Math.sin(alpha / 3) * 0.6 + 0.6;
-})
+//     if( dateMillis % 5 === 0 ) {
+//         highlightLayer.outerGlow = false
+//         highlightLayer.innerGlow = false
+//     } else {
+//         highlightLayer.outerGlow = true
+//         highlightLayer.innerGlow = true
+//     }
+
+//     highlightLayer.blurHorizontalSize = 0.3 + Math.cos(alpha) * 0.6 + 0.6;		
+//     highlightLayer.blurVerticalSize = 0.3 + Math.sin(alpha / 3) * 0.6 + 0.6;
+// })
 
 
 // run engine
