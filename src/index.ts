@@ -188,23 +188,25 @@ sprite.isPickable = true
 
 
 // cube 1
-const cube1 = B.MeshBuilder.CreateBox("cube1", { width: 2, height: 2, depth: 2 }, scene)
-cube1.position.y = 1
-cube1.position.z = 5
-cube1.isPickable = false
+// const cube1 = B.MeshBuilder.CreateBox("cube1", { width: 2, height: 2, depth: 2 }, scene)
+// cube1.position.y = 1
+// cube1.position.z = 5
+// cube1.isPickable = false
 
 const cube1Mat = new B.StandardMaterial("cube1Mat", scene)
 cube1Mat.diffuseColor = new B.Color3(0, 0, 1)
-cube1.material = cube1Mat
+// cube1.material = cube1Mat
 
 
 // cube 2
-const cube2 = B.MeshBuilder.CreateBox("cube1", { width: 5, height: 5, depth: 5 }, scene)
+const cube2 = B.MeshBuilder.CreateBox("cube1", { width: 2, height: 8, depth: 2 }, scene)
 cube2.position.y = 2.5
 cube2.position.z = 7
-cube2.position.x  = 8
+cube2.position.x  = 12
+cube2.material = cube1Mat
 
-
+// to receive shadows
+cube2.receiveShadows = true
 
 
 
@@ -247,6 +249,11 @@ particlSystm.start()
 
 
 
+// shadow generator
+const shadowGen = new B.ShadowGenerator(512, light)
+shadowGen.getShadowMap().renderList.push(cube2)
+shadowGen.useBlurExponentialShadowMap = true
+shadowGen.bias = .01
 
 // scene.onPointerDown = function(evt) {
 //     const pickedResult = scene.pickSprite(this.pointerX, this.pointerY) 
@@ -261,20 +268,20 @@ particlSystm.start()
 //     torus.position.x = pickedResult.pickedPoint.x
 // }
 
-scene.onPointerMove = function () {
-    var pickResult = scene.pick(scene.pointerX, scene.pointerY);
+// scene.onPointerMove = function () {
+//     var pickResult = scene.pick(scene.pointerX, scene.pointerY);
 
-    if (pickResult.hit) {
-        var diffX = pickResult.pickedPoint.x - cube1.position.x;
-        var diffY = pickResult.pickedPoint.z - cube1.position.z;
-        cube1.rotation.y = Math.atan2(diffX,diffY);			
-    }
-}
+//     if (pickResult.hit) {
+//         var diffX = pickResult.pickedPoint.x - cube1.position.x;
+//         var diffY = pickResult.pickedPoint.z - cube1.position.z;
+//         cube1.rotation.y = Math.atan2(diffX,diffY);			
+//     }
+// }
 
 
 
 // animations here
-// scene.registerBeforeRender(()=> {
+scene.registerBeforeRender(()=> {
     // torus.rotation.y += .01
     // camera.alpha += .01
     // cube1.position.z -= .02
@@ -288,27 +295,27 @@ scene.onPointerMove = function () {
     //     cube1Mat.diffuseColor = new B.Color3(0, 0, 1)
     // }
 
-// })
-scene.registerBeforeRender(function () {
-    var origin = cube1.position;
+})
+// scene.registerBeforeRender(function () {
+//     var origin = cube1.position;
 
-    var forward = new B.Vector3(0,0,1);		
-    forward = vecToLocal(forward, cube1);
+//     var forward = new B.Vector3(0,0,1);		
+//     forward = vecToLocal(forward, cube1);
 
-    var direction = forward.subtract(origin);
-    direction = B.Vector3.Normalize(direction);
+//     var direction = forward.subtract(origin);
+//     direction = B.Vector3.Normalize(direction);
 
-    var length = 100;
+//     var length = 100;
 
-    var ray = new B.Ray(origin, direction, length);
-    // ray.show(scene, new BABYLON.Color3(1, 1, 0.1));
+//     var ray = new B.Ray(origin, direction, length);
+//     // ray.show(scene, new BABYLON.Color3(1, 1, 0.1));
 
-    var hit = scene.pickWithRay(ray);
+//     var hit = scene.pickWithRay(ray);
 
-    if (hit.pickedMesh) {
-       hit.pickedMesh.scaling.y  += 0.01;
-    }
- });
+//     if (hit.pickedMesh) {
+//        hit.pickedMesh.scaling.y  += 0.01;
+//     }
+//  });
 
 engine.runRenderLoop(()=> scene.render())
 
