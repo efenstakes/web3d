@@ -188,10 +188,10 @@ sprite.isPickable = true
 
 
 // cube 1
-// const cube1 = B.MeshBuilder.CreateBox("cube1", { width: 2, height: 2, depth: 2 }, scene)
-// cube1.position.y = 1
-// cube1.position.z = 5
-// cube1.isPickable = false
+const cube1 = B.MeshBuilder.CreateBox("cube1", { width: 2, height: 2, depth: 2 }, scene)
+cube1.position.y = 1
+cube1.position.z = 5
+cube1.isPickable = false
 
 const cube1Mat = new B.StandardMaterial("cube1Mat", scene)
 cube1Mat.diffuseColor = new B.Color3(0, 0, 1)
@@ -250,10 +250,28 @@ particlSystm.start()
 
 
 // shadow generator
-const shadowGen = new B.ShadowGenerator(512, light)
-shadowGen.getShadowMap().renderList.push(cube2)
-shadowGen.useBlurExponentialShadowMap = true
-shadowGen.bias = .01
+// const shadowGen = new B.ShadowGenerator(512, light)
+// shadowGen.getShadowMap().renderList.push(cube2)
+// shadowGen.useBlurExponentialShadowMap = true
+// shadowGen.bias = .01
+
+
+
+
+
+
+
+// highlight layers
+const highlightLayer = new B.HighlightLayer("highlightLayer", scene)
+highlightLayer.addMesh(cube2, B.Color3.Yellow(), true)
+highlightLayer.addMesh(cube1, B.Color3.Purple())
+
+
+
+
+
+
+
 
 // scene.onPointerDown = function(evt) {
 //     const pickedResult = scene.pickSprite(this.pointerX, this.pointerY) 
@@ -281,7 +299,7 @@ shadowGen.bias = .01
 
 
 // animations here
-scene.registerBeforeRender(()=> {
+// scene.registerBeforeRender(()=> {
     // torus.rotation.y += .01
     // camera.alpha += .01
     // cube1.position.z -= .02
@@ -295,7 +313,7 @@ scene.registerBeforeRender(()=> {
     //     cube1Mat.diffuseColor = new B.Color3(0, 0, 1)
     // }
 
-})
+// })
 // scene.registerBeforeRender(function () {
 //     var origin = cube1.position;
 
@@ -317,6 +335,29 @@ scene.registerBeforeRender(()=> {
 //     }
 //  });
 
+
+
+// highlight layers
+var alpha = 0
+scene.registerBeforeRender(()=> {
+    alpha += 0.06
+
+    const dateMillis = Date.now()
+
+    if( dateMillis % 5 === 0 ) {
+        highlightLayer.outerGlow = false
+        highlightLayer.innerGlow = false
+    } else {
+        highlightLayer.outerGlow = true
+        highlightLayer.innerGlow = true
+    }
+    
+    highlightLayer.blurHorizontalSize = 0.3 + Math.cos(alpha) * 0.6 + 0.6;		
+    highlightLayer.blurVerticalSize = 0.3 + Math.sin(alpha / 3) * 0.6 + 0.6;
+})
+
+
+// run engine
 engine.runRenderLoop(()=> scene.render())
 
 
