@@ -599,6 +599,66 @@ cube1.edgesColor = new B.Color4(1, 0, 0, 1)
 
 
 
+
+// Curve3
+
+// const quadraticBezierVectors = B.Curve3.CreateQuadraticBezier( 
+//     B.Vector3.Zero(), 
+//     new B.Vector3(10, 5, 5), 
+//     new B.Vector3(10, 10, 0), 
+//     15
+// );
+// const quadraticBezierCurve = B.MeshBuilder.CreateLines(
+//     "qbezier", 
+//     { 
+//         points: quadraticBezierVectors.getPoints(),
+//         // colors: [
+//         //     new B.Color4(1, 1, 1, 1),
+//         //     new B.Color4(1, 1, 0, 1),
+//         //     new B.Color4(1, .5, 1, 1),
+//         //     new B.Color4(0, 1, 1, 1),
+//         // ]
+//     }, 
+//     scene
+// )
+// quadraticBezierCurve.color = new B.Color3(1, 1, 0.5)
+
+
+
+// const cubicBezierVectors = B.Curve3.CreateCubicBezier( 
+//     B.Vector3.Zero(), 
+//     new B.Vector3(10, 5, 20), 
+//     new B.Vector3(-50, 5, -20), 
+//     new B.Vector3( -10, 20, 10), 
+//     60
+// )
+// const cubicBezierCurve = B.MeshBuilder.CreateLines(
+//     "cbezier", { points: cubicBezierVectors.getPoints() }, scene
+// )
+// cubicBezierCurve.color = new B.Color3(1, 0, 0)
+
+
+
+const createCatmullRomSpline = B.Curve3.CreateCatmullRomSpline( 
+    [
+        B.Vector3.Zero(), 
+        new B.Vector3(10, 5, 20), 
+        new B.Vector3(-50, 5, -20), 
+        new B.Vector3( -10, 20, 10), 
+    ],
+    60
+)
+const createCatmullRomSplineCurve = B.MeshBuilder.CreateLines(
+    "cbezier", { points: createCatmullRomSpline.getPoints() }, scene
+)
+createCatmullRomSplineCurve.color = new B.Color3(1, 0, 0)
+
+
+
+
+
+
+
 // animations here
 // scene.registerBeforeRender(()=> {
     // torus.rotation.y += .01
