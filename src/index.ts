@@ -485,70 +485,117 @@ cube1.edgesColor = new B.Color4(1, 0, 0, 1)
 // SolidParticle System
 
 // particle meshes
-const boxP = B.MeshBuilder.CreateBox("boxP", { width: 2, height: 2, depth: 2 }, scene)
-const ballP = B.MeshBuilder.CreateSphere("ballP", { diameter: 2, segments: 10 }, scene)
+// const boxP = B.MeshBuilder.CreateBox("boxP", { width: 2, height: 2, depth: 2 }, scene)
+// const ballP = B.MeshBuilder.CreateSphere("ballP", { diameter: 2, segments: 10 }, scene)
 
-const solidParticleSystem = new B.SolidParticleSystem( "solidParticleSystem", scene )
-solidParticleSystem.addShape( boxP, 500 )
-solidParticleSystem.addShape( ballP, 500 )
+// const solidParticleSystem = new B.SolidParticleSystem( "solidParticleSystem", scene )
+// solidParticleSystem.addShape( boxP, 500 )
+// solidParticleSystem.addShape( ballP, 500 )
 
-const mesh = solidParticleSystem.buildMesh()
+// const mesh = solidParticleSystem.buildMesh()
 
-// free them from memory
-boxP.dispose()
-ballP.dispose()
-
-
-const solidParticleSystemMat = new B.StandardMaterial("solidParticleSystemMat", scene);
-const texture = new B.Texture("../assets/ring.png", scene);
-solidParticleSystemMat.diffuseTexture = texture
-
-// set solidParticleSystem mesh material
-mesh.material = solidParticleSystemMat
-
-// mesh.position.y = -50
-mesh.position.y = 5
+// // free them from memory
+// boxP.dispose()
+// ballP.dispose()
 
 
-// init
-solidParticleSystem.initParticles = function() {
-    // just recycle everything
-    for (var p = 0; p < this.nbParticles; p++) {
-       recycleParticle(this.particles[p]);
-    }
-}
+// const solidParticleSystemMat = new B.StandardMaterial("solidParticleSystemMat", scene);
+// const texture = new B.Texture("../assets/ring.png", scene);
+// solidParticleSystemMat.diffuseTexture = texture
 
-solidParticleSystem.updateParticle = function(particle: B.SolidParticle): B.SolidParticle {  
-    // some physics here 
-    if (particle.position.y < 0) {
-       recycleParticle(particle)
-    }
-    particle.velocity.y += gravity; // apply gravity to y
-    (particle.position).addInPlace(particle.velocity);  // update particle new position
-    particle.position.y += speed / 2;
+// // set solidParticleSystem mesh material
+// mesh.material = solidParticleSystemMat
 
-    var sign = (particle.idx % 2 == 0) ? 1 : -1;  // rotation sign and new value
-    particle.rotation.z += 0.1 * sign;
-    particle.rotation.x += 0.05 * sign;
-    particle.rotation.y += 0.008 * sign;
-
-    return particle
-}
-
-// init all particle values and set them once to apply textures, colors, etc
-solidParticleSystem.initParticles();
-solidParticleSystem.setParticles();
-
-solidParticleSystem.computeParticleColor = false;
-solidParticleSystem.computeParticleTexture = false
+// // mesh.position.y = -50
+// mesh.position.y = 5
 
 
-scene.debugLayer.show()
-// animation
-scene.registerBeforeRender(function() {
-    solidParticleSystem.setParticles()
-    solidParticleSystem.mesh.rotation.y += 0.01
-})
+// // init
+// solidParticleSystem.initParticles = function() {
+//     // just recycle everything
+//     for (var p = 0; p < this.nbParticles; p++) {
+//        recycleParticle(this.particles[p]);
+//     }
+// }
+
+// solidParticleSystem.updateParticle = function(particle: B.SolidParticle): B.SolidParticle {  
+//     // some physics here 
+//     if (particle.position.y < 0) {
+//        recycleParticle(particle)
+//     }
+//     particle.velocity.y += gravity; // apply gravity to y
+//     (particle.position).addInPlace(particle.velocity);  // update particle new position
+//     particle.position.y += speed / 2;
+
+//     var sign = (particle.idx % 2 == 0) ? 1 : -1;  // rotation sign and new value
+//     particle.rotation.z += 0.1 * sign;
+//     particle.rotation.x += 0.05 * sign;
+//     particle.rotation.y += 0.008 * sign;
+
+//     return particle
+// }
+
+// // init all particle values and set them once to apply textures, colors, etc
+// solidParticleSystem.initParticles();
+// solidParticleSystem.setParticles();
+
+// solidParticleSystem.computeParticleColor = false;
+// solidParticleSystem.computeParticleTexture = false
+
+
+// scene.debugLayer.show()
+// // animation
+// scene.registerBeforeRender(function() {
+//     solidParticleSystem.setParticles()
+//     solidParticleSystem.mesh.rotation.y += 0.01
+// })
+
+
+
+
+
+
+
+
+
+
+// Decals
+// used to add details on the created mesh – details like bullets, holes
+
+// const decalsMat = new B.StandardMaterial("decalsMat", scene)
+// decalsMat.diffuseTexture = new B.Texture("../assets/hole.png", scene)
+// decalsMat.diffuseTexture.hasAlpha = true
+// decalsMat.zOffset = -2
+
+
+
+
+// var onPointerDown = function (evt) {
+//     if (evt.button !== 0) {
+//        return;
+//     }
+
+//     // check if we are under a mesh
+//     var pickInfo = scene.pick(scene.pointerX, scene.pointerY, function (mesh) { return mesh === cube1 })
+    
+//     // this will give all the meshes , 
+//     // but it will pick the mesh whch is same as cube1(target mesh) and 
+//     // return true if it is found });
+
+//     if (pickInfo.hit) { // if true
+//        var decalSize = new B.Vector3(5, 5, 5); //size of decal is defined
+
+//        var newDecal = B.MeshBuilder.CreateDecal("decal", cube1); //decal is created 
+//        newDecal.material = decalsMat; //decal material is added.
+//     }
+//  }
+
+// canvasEL.addEventListener("pointerdown", onPointerDown, false)
+
+
+
+
+
 
 
 
