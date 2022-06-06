@@ -467,6 +467,17 @@ cube1.edgesColor = new B.Color4(1, 0, 0, 1)
 
 
 
+// Mesh BlendModes
+// create a blend mode by modifying the alphamode of the materials
+
+
+const cube1MaterialClone = cube1Mat.clone(null)
+cube1MaterialClone.alphaMode = B.Engine.ALPHA_INTERPOLATE
+
+const ballX = B.MeshBuilder.CreateSphere(
+    "ballX", { diameter: 4, segments: 20 }, scene
+)
+ballX.material = cube1MaterialClone
 
 
 
