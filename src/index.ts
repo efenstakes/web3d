@@ -16,9 +16,9 @@ const scene = new B.Scene(engine, {})
 scene.clearColor = new B.Color4(0.5, 0.8, 0.5, .2)
 scene.ambientColor = new B.Color3(0.3, 0.3, 0.3)
 // add fog
-// scene.fogMode = BABYLON.Scene.FOGMODE_EXP
+// scene.fogMode = B.Scene.FOGMODE_EXP
 // scene.fogDensity = .01
-// scene.fogColor = new BABYLON.Color3(0.9, 0.9, 0.85)
+// scene.fogColor = new B.Color3(0.9, 0.9, 0.85)
 
 
 // create light
@@ -97,7 +97,7 @@ ground.material = groundMaterial
 // const torusMaterial = new B.StandardMaterial("TorusMat", scene)
 // // torusMaterial.diffuseColor = new B.Color3(1, 0, .4)
 // torusMaterial.diffuseTexture = new B.Texture("../assets/ring.png")
-// torusMaterial.ambientColor = new BABYLON.Color3(1, 0, 0)
+// torusMaterial.ambientColor = new B.Color3(1, 0, 0)
 // // set transparency
 // // torusMaterial.alpha = .5
 // torus.material = torusMaterial
@@ -470,14 +470,85 @@ cube1.edgesColor = new B.Color4(1, 0, 0, 1)
 // Mesh BlendModes
 // create a blend mode by modifying the alphamode of the materials
 
+// const cube1MaterialClone = cube1Mat.clone(null)
+// cube1MaterialClone.alphaMode = B.Engine.ALPHA_INTERPOLATE
 
-const cube1MaterialClone = cube1Mat.clone(null)
-cube1MaterialClone.alphaMode = B.Engine.ALPHA_INTERPOLATE
+// const ballX = B.MeshBuilder.CreateSphere(
+//     "ballX", { diameter: 4, segments: 20 }, scene
+// )
+// ballX.material = cube1MaterialClone
 
-const ballX = B.MeshBuilder.CreateSphere(
-    "ballX", { diameter: 4, segments: 20 }, scene
-)
-ballX.material = cube1MaterialClone
+
+
+
+
+// SolidParticle System
+
+// particle meshes
+const boxP = B.MeshBuilder.CreateBox("boxP", { width: 2, height: 2, depth: 2 }, scene)
+const ballP = B.MeshBuilder.CreateSphere("ballP", { diameter: 2, segments: 10 }, scene)
+
+const solidParticleSystem = new B.SolidParticleSystem( "solidParticleSystem", scene )
+solidParticleSystem.addShape( boxP, 500 )
+solidParticleSystem.addShape( ballP, 500 )
+
+const mesh = solidParticleSystem.buildMesh()
+
+// free them from memory
+boxP.dispose()
+ballP.dispose()
+
+
+const solidParticleSystemMat = new B.StandardMaterial("solidParticleSystemMat", scene);
+const texture = new B.Texture("../assets/ring.png", scene);
+solidParticleSystemMat.diffuseTexture = texture
+
+// set solidParticleSystem mesh material
+mesh.material = solidParticleSystemMat
+
+// mesh.position.y = -50
+mesh.position.y = 5
+
+
+// init
+solidParticleSystem.initParticles = function() {
+    // just recycle everything
+    for (var p = 0; p < this.nbParticles; p++) {
+       recycleParticle(this.particles[p]);
+    }
+}
+
+solidParticleSystem.updateParticle = function(particle: B.SolidParticle): B.SolidParticle {  
+    // some physics here 
+    if (particle.position.y < 0) {
+       recycleParticle(particle)
+    }
+    particle.velocity.y += gravity; // apply gravity to y
+    (particle.position).addInPlace(particle.velocity);  // update particle new position
+    particle.position.y += speed / 2;
+
+    var sign = (particle.idx % 2 == 0) ? 1 : -1;  // rotation sign and new value
+    particle.rotation.z += 0.1 * sign;
+    particle.rotation.x += 0.05 * sign;
+    particle.rotation.y += 0.008 * sign;
+
+    return particle
+}
+
+// init all particle values and set them once to apply textures, colors, etc
+solidParticleSystem.initParticles();
+solidParticleSystem.setParticles();
+
+solidParticleSystem.computeParticleColor = false;
+solidParticleSystem.computeParticleTexture = false
+
+
+scene.debugLayer.show()
+// animation
+scene.registerBeforeRender(function() {
+    solidParticleSystem.setParticles()
+    solidParticleSystem.mesh.rotation.y += 0.01
+})
 
 
 
@@ -509,7 +580,7 @@ ballX.material = cube1MaterialClone
 //     var length = 100;
 
 //     var ray = new B.Ray(origin, direction, length);
-//     // ray.show(scene, new BABYLON.Color3(1, 1, 0.1));
+//     // ray.show(scene, new B.Color3(1, 1, 0.1));
 
 //     var hit = scene.pickWithRay(ray);
 
@@ -553,3 +624,27 @@ function vecToLocal(vector, mesh) {
     var v = B.Vector3.TransformCoordinates(vector, m);
     return v;		
 }
+
+var speed = 1.5;
+var gravity = -0.01;
+function recycleParticle(particle) {
+    particle.position.x = 0;
+    particle.position.y = 0;
+    particle.position.z = 0;
+    particle.velocity.x = (Math.random() - 0.5) * speed;
+    particle.velocity.y = Math.random() * speed;
+    particle.velocity.z = (Math.random() - 0.5) * speed;
+    
+    var scale = Math.random() +0.5;
+    particle.scale.x = scale;
+    particle.scale.y = scale;
+    particle.scale.z = scale;
+    particle.rotation.x = Math.random() * 3.5;
+    particle.rotation.y = Math.random() * 3.5;
+    particle.rotation.z = Math.random() * 3.5;
+    
+    particle.color.r = Math.random() * 0.6 + 0.5;
+    particle.color.g = Math.random() * 0.6 + 0.5;
+    particle.color.b = Math.random() * 0.6 + 0.5;
+    particle.color.a = Math.random() * 0.6 + 0.5;
+ }
