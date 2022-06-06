@@ -433,26 +433,38 @@ particlSystm.maxEmitBox = new B.Vector3(1, 0, 0) // to
 
 
 // VolumemetricLightScatteringPost
-const vLSP = new B.VolumetricLightScatteringPostProcess(
-    // Name given to the light
-    "VolumemetricLightScatteringPost", 
-    // The size of the post-process (0.5 means that your postprocess will have a width = canvas.width 0.5 and a height = canvas.height 0.5)
-    .9,
-    // The camera used in the scene
-    camera,
-    // The mesh used to create the light scattering effect
-    cube1, 
-    // The post-process quality, default 100
-    150,
-    // The post-process filtering mode
-    B.Texture.BILINEAR_SAMPLINGMODE,
-    // engine
-    engine,
-    // Postprocess if reusable
-    false,
-    // scene
-    scene
-)
+// const vLSP = new B.VolumetricLightScatteringPostProcess(
+//     // Name given to the light
+//     "VolumemetricLightScatteringPost", 
+//     // The size of the post-process (0.5 means that your postprocess will have a width = canvas.width 0.5 and a height = canvas.height 0.5)
+//     .9,
+//     // The camera used in the scene
+//     camera,
+//     // The mesh used to create the light scattering effect
+//     cube1, 
+//     // The post-process quality, default 100
+//     150,
+//     // The post-process filtering mode
+//     B.Texture.BILINEAR_SAMPLINGMODE,
+//     // engine
+//     engine,
+//     // Postprocess if reusable
+//     false,
+//     // scene
+//     scene
+// )
+
+
+
+
+
+// Mesh EdgesRenderer
+// draws egdes around the mesh
+
+cube1.enableEdgesRendering()
+cube1.edgesWidth = 10
+cube1.edgesColor = new B.Color4(1, 0, 0, 1)
+
 
 
 
