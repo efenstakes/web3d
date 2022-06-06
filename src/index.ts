@@ -639,19 +639,49 @@ cube1.edgesColor = new B.Color4(1, 0, 0, 1)
 
 
 
-const createCatmullRomSpline = B.Curve3.CreateCatmullRomSpline( 
-    [
-        B.Vector3.Zero(), 
-        new B.Vector3(10, 5, 20), 
-        new B.Vector3(-50, 5, -20), 
-        new B.Vector3( -10, 20, 10), 
-    ],
-    60
+// const createCatmullRomSpline = B.Curve3.CreateCatmullRomSpline( 
+//     [
+//         B.Vector3.Zero(), 
+//         new B.Vector3(10, 5, 20), 
+//         new B.Vector3(-50, 5, -20), 
+//         new B.Vector3( -10, 20, 10), 
+//     ],
+//     60
+// )
+// const createCatmullRomSplineCurve = B.MeshBuilder.CreateLines(
+//     "cbezier", { points: createCatmullRomSpline.getPoints() }, scene
+// )
+// createCatmullRomSplineCurve.color = new B.Color3(1, 0, 0)
+
+
+
+
+
+
+// Parallax Mapping
+// It uses a height map which is applied as an offset 
+// on the material's textures in order to accentuate the effect of 
+// relief in the geometry's surface. In the 3Dworld, stone walls with a 
+// depth applied to it will have more apparent looks and will look 
+// realistic to the end user. 
+// At steeper view-angles, the texture coordinates are displaced more, 
+// giving the illusion of depth due to parallax effects as 
+// the view changes
+
+
+const realBox = B.MeshBuilder.CreateBox(
+    "realBox", { width: 3, height: 3, depth: 3 }, scene
 )
-const createCatmullRomSplineCurve = B.MeshBuilder.CreateLines(
-    "cbezier", { points: createCatmullRomSpline.getPoints() }, scene
-)
-createCatmullRomSplineCurve.color = new B.Color3(1, 0, 0)
+realBox.position.y = 1.5
+const realBoxMat = new B.StandardMaterial("realBoxMat", scene)
+realBoxMat.diffuseTexture = new B.Texture("../assets/stones2.jpg")
+realBox.material = realBoxMat
+
+realBoxMat.useParallax = true
+realBoxMat.useParallaxOcclusion = true
+realBoxMat.parallaxScaleBias = .3
+realBoxMat.specularPower = 1000
+realBoxMat.specularColor = new B.Color3(0.5, 0.5, 0.5)
 
 
 
