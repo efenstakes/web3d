@@ -193,7 +193,7 @@ cube1.position.z = 5
 cube1.isPickable = true
 
 const cube1Mat = new B.StandardMaterial("cube1Mat", scene)
-cube1Mat.diffuseColor = new B.Color3(0, 0, 1)
+cube1Mat.diffuseColor = new B.Color3(0, 1, 1)
 cube1.material = cube1Mat
 
 
@@ -426,6 +426,35 @@ particlSystm.maxEmitBox = new B.Vector3(1, 0, 0) // to
 //         cube1.rotation.y = Math.atan2(diffX,diffY);			
 //     }
 // }
+
+
+
+
+
+
+// VolumemetricLightScatteringPost
+const vLSP = new B.VolumetricLightScatteringPostProcess(
+    // Name given to the light
+    "VolumemetricLightScatteringPost", 
+    // The size of the post-process (0.5 means that your postprocess will have a width = canvas.width 0.5 and a height = canvas.height 0.5)
+    .9,
+    // The camera used in the scene
+    camera,
+    // The mesh used to create the light scattering effect
+    cube1, 
+    // The post-process quality, default 100
+    150,
+    // The post-process filtering mode
+    B.Texture.BILINEAR_SAMPLINGMODE,
+    // engine
+    engine,
+    // Postprocess if reusable
+    false,
+    // scene
+    scene
+)
+
+
 
 
 
