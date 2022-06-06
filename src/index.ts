@@ -689,6 +689,30 @@ realBoxMat.specularColor = new B.Color3(0.5, 0.5, 0.5)
 
 
 
+
+// Lens Flares
+// to show a realistic occurrence of the light effect, lens flare is used
+// Consider sun rays falling on the mirror and the effect seen of it is mostly called Lens Flare
+
+
+// const lensFlareSys = new B.LensFlareSystem("lensFlareSys", light, scene)
+
+// const flare = new B.LensFlare(
+//     Math.random(), // size
+//     .15, // position
+//     B.Color3.Yellow(),   // color
+//     "../assets/ring.png",
+//     lensFlareSys
+// )
+
+
+
+
+
+
+
+
+
 // animations here
 // scene.registerBeforeRender(()=> {
     // torus.rotation.y += .01
