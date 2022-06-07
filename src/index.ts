@@ -142,7 +142,11 @@ ground.material = groundMaterial
 // skyboxMat.specularColor = new B.Color3(0, 0, 0)
 // skyboxMat.disableLighting = true
 // skybox.material = skyboxMat
-
+// skybox.microSurface = 1.0
+// skybox.cameraExposure = 0.6
+// skybox.cameraContrast = 1.6
+// skybox.disableLighting = true
+// skybox.infiniteDistance = true
 
 
 
@@ -692,7 +696,87 @@ realBoxMat.specularColor = new B.Color3(0.5, 0.5, 0.5)
 
 
 
+// physics engine
 
+
+
+// restitution
+// amount of force the body will "give back" when colliding. 
+// A low value will create no bounce and a value of 1 will be a very bouncy interaction
+
+
+
+// ennable physics
+scene.enablePhysics(
+    new B.Vector3(0, -9.8, 0),
+    // physics engine
+    new B.OimoJSPlugin()
+)
+
+
+// add imposter to ground to avoid objects falling thru
+ground.physicsImpostor = new B.PhysicsImpostor(
+    ground,
+    B.PhysicsImpostor.PlaneImpostor,
+    { mass: 0, restitution: .3 },
+    scene
+)
+
+
+// const pSphere = B.MeshBuilder.CreateSphere(
+//     "pSphere", { diameter: 4, segments: 32 }, scene
+// )
+// pSphere.position.y = 12
+
+
+// // material
+// const pSphereMat = new B.StandardMaterial("pSphereMat", scene)
+// pSphereMat.diffuseColor = B.Color3.Red()
+// pSphereMat.emissiveColor = B.Color3.Blue()
+// pSphere.material = pSphereMat
+
+// // importser
+// pSphere.physicsImpostor = new B.PhysicsImpostor(
+//     pSphere, 
+//     B.PhysicsImpostor.SphereImpostor,
+//     { mass: 10, restitution: .9 },
+//     scene
+// )
+
+
+// box
+realBox.physicsImpostor = new B.PhysicsImpostor(
+    realBox,
+    B.PhysicsImpostor.BoxImpostor,
+    {  mass: 300, restitution: .7 },
+    scene
+)
+
+
+const pSphere = B.MeshBuilder.CreateSphere(
+    "pSphere", { diameter: 4, segments: 32 }, scene
+)
+    
+// material
+const pSphereMat = new B.StandardMaterial("pSphereMat", scene)
+pSphereMat.diffuseColor = B.Color3.Red()
+pSphereMat.emissiveColor = B.Color3.Blue()
+
+// importser
+const spehereImpostor = new B.PhysicsImpostor(
+    pSphere, 
+    B.PhysicsImpostor.SphereImpostor,
+    { mass: 10, restitution: .9 },
+    scene
+)
+
+for (let index = 0; index < 120; index++) {
+    const newPSphere = pSphere.clone(null)
+    newPSphere.position.y = 12
+    
+    newPSphere.material = pSphereMat
+    newPSphere.physicsImpostor = spehereImpostor
+}
 
 
 
@@ -743,16 +827,26 @@ function takeScreenShot() {
 // used to create a mirror like scene.
 
 
-const x45Box = B.MeshBuilder.CreateBox(
-    "realBox", { width: 3, height: 3, depth: 3 }, scene
-)
-x45Box.position.y = 1.5
-const x45BoxMat = new B.StandardMaterial("x45BoxMat", scene)
-x45BoxMat.diffuseTexture = new B.Texture("../assets/stones3.jpg")
-x45Box.material = x45BoxMat
+// const x45Box = B.MeshBuilder.CreateBox(
+//     "realBox", { width: 3, height: 3, depth: 3 }, scene
+// )
+// x45Box.position.y = 1.5
+// const x45BoxMat = new B.StandardMaterial("x45BoxMat", scene)
+// x45BoxMat.diffuseTexture = new B.Texture("../assets/stones3.jpg")
+// x45Box.material = x45BoxMat
 
-x45BoxMat.reflectionTexture =  new B.Texture("../assets/mirrow.jpg")
-x45BoxMat.reflectionTexture.level = .5
+// x45BoxMat.reflectionTexture =  new B.Texture("../assets/mirrow.jpg")
+// x45BoxMat.reflectionTexture.level = .5
+
+
+
+
+
+
+
+
+// Standard Rendering Pipeline
+
 
 
 
