@@ -5,10 +5,16 @@ import * as B from 'babylonjs'
 const canvasEL = document.getElementById("3d")
 
 console.log("canvasEL ", canvasEL)
-console.log("hola from ts ")
+
+
+// button
+const sButton = document.getElementById("takeScreenShot")
+// console.log("button ", sButton)
+sButton.addEventListener("click", takeScreenShot)
+
 
 // create engine
-const engine = new B.Engine(canvasEL as HTMLCanvasElement)
+const engine = new B.Engine(canvasEL as HTMLCanvasElement, true, { preserveDrawingBuffer: true, stencil: true })
 
 
 // create scene
@@ -701,11 +707,32 @@ realBoxMat.specularColor = new B.Color3(0.5, 0.5, 0.5)
 //     Math.random(), // size
 //     .15, // position
 //     B.Color3.Yellow(),   // color
-//     "../assets/ring.png",
+//     "../assets/sun.jpg",
 //     lensFlareSys
 // )
 
 
+
+
+
+
+
+// Create ScreenShot
+// pass { preserveDrawingBuffer: true, stencil: true } to the engines third param
+
+function takeScreenShot() {
+    B.Tools.CreateScreenshot(
+        engine,
+        camera,
+        { width: 1024, height: 560 },
+        (data)=> {
+            console.log("ScreenShot data ", data)
+            const img = document.createElement("img")
+            img.src = data
+            document.body.append(img)
+        }
+    )
+}
 
 
 
