@@ -52,7 +52,7 @@ light.diffuse = new B.Color3(0, 1, 0) // B.Color3.Purple()
 light.specular = new B.Color3(1, 0, 1)
 
 // create camera
-const camera = new B.ArcRotateCamera("Camera", 1, 2, 30, B.Vector3.Zero(), scene)
+const camera = new B.ArcRotateCamera("Camera", 1, 2, 120, B.Vector3.Zero(), scene)
 // const camera = new B.WebVRFreeCamera("WebVRFreeCamera", new B.Vector3(0, 10, -30), scene)
 camera.attachControl(true)
 camera.upperBetaLimit = Math.PI / 2.1
@@ -718,7 +718,7 @@ scene.enablePhysics(
 ground.physicsImpostor = new B.PhysicsImpostor(
     ground,
     B.PhysicsImpostor.PlaneImpostor,
-    { mass: 0, restitution: .3 },
+    { mass: 0, restitution: .3, friction: 5 },
     scene
 )
 
@@ -777,6 +777,87 @@ for (let index = 0; index < 120; index++) {
     newPSphere.material = pSphereMat
     newPSphere.physicsImpostor = spehereImpostor
 }
+
+
+
+
+
+
+
+
+// Playing Sounds and Music
+
+
+const music = new B.Sound(
+    "Music", 
+    "../assets/Sultan  Shepard  Assassin Official Lyric Video.mp3",
+    scene,
+    ()=> console.log("we can play"),
+    {
+        autoplay: false,
+        loop: false
+    }
+)
+
+
+canvasEL.addEventListener("keypress", ({ key }: KeyboardEvent)=> {
+    console.log("key ", key)
+
+    // if( (key === "p" || key === " ") && !music.isPlaying ) {
+    //     music.play()
+    // } else if( key === "q" && music.isPlaying ) {
+    //     music.pause()
+    // }
+})
+
+
+
+// when music clip ends
+music.onended = ()=> {
+    console.log("music has ended")
+}
+
+
+// set volume
+// music.setVolume(volume)
+
+// set a global sound for all the sounds created
+// B.Engine.audioEngine.setGlobalVolume(0.5)
+
+
+
+
+
+
+// Spatial 3D Sound
+
+const music3D = new B.Sound(
+    "music3D", 
+    "../assets/Sultan  Shepard  Assassin Official Lyric Video.mp3",
+    scene,
+    ()=> console.log("we can play"),
+    {
+        autoplay: false,
+        loop: false,
+        spatialSound: true
+    }
+)
+
+
+// Attaching sound to a mesh
+// If the mesh is moving, the sound will move along with it
+// music3D.attachToMesh(realBox)
+
+
+
+
+
+
+
+
+
+
+
 
 
 
