@@ -8,9 +8,9 @@ console.log("canvasEL ", canvasEL)
 
 
 // button
-const sButton = document.getElementById("takeScreenShot")
-// console.log("button ", sButton)
-sButton.addEventListener("click", takeScreenShot)
+// const sButton = document.getElementById("takeScreenShot")
+// // console.log("button ", sButton)
+// sButton.addEventListener("click", takeScreenShot)
 
 
 // create engine
@@ -733,6 +733,26 @@ function takeScreenShot() {
         }
     )
 }
+
+
+
+
+
+// Reflection Probes
+
+// used to create a mirror like scene.
+
+
+const x45Box = B.MeshBuilder.CreateBox(
+    "realBox", { width: 3, height: 3, depth: 3 }, scene
+)
+x45Box.position.y = 1.5
+const x45BoxMat = new B.StandardMaterial("x45BoxMat", scene)
+x45BoxMat.diffuseTexture = new B.Texture("../assets/stones3.jpg")
+x45Box.material = x45BoxMat
+
+x45BoxMat.reflectionTexture =  new B.Texture("../assets/mirrow.jpg")
+x45BoxMat.reflectionTexture.level = .5
 
 
 
