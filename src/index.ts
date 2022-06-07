@@ -718,7 +718,7 @@ scene.enablePhysics(
 ground.physicsImpostor = new B.PhysicsImpostor(
     ground,
     B.PhysicsImpostor.PlaneImpostor,
-    { mass: 0, restitution: .3, friction: 5 },
+    { mass: 0, restitution: .1, friction: 50 },
     scene
 )
 
@@ -766,17 +766,91 @@ pSphereMat.emissiveColor = B.Color3.Blue()
 const spehereImpostor = new B.PhysicsImpostor(
     pSphere, 
     B.PhysicsImpostor.SphereImpostor,
-    { mass: 10, restitution: .9 },
+    { mass: 10, restitution: 0.3 },
     scene
 )
 
-for (let index = 0; index < 120; index++) {
+for (let index = 0; index < 60; index++) {
     const newPSphere = pSphere.clone(null)
-    newPSphere.position.y = 12
+    newPSphere.position.y = Math.random() * 12
+    newPSphere.position.x = Math.random() * 5
     
     newPSphere.material = pSphereMat
     newPSphere.physicsImpostor = spehereImpostor
 }
+
+
+
+// Linear velocity
+// updates the object's position
+// A velocity in any axis will cause a movement in its direction
+
+// get the object's liner velocity : B.Vector3
+// impostor.getLinearVelocity()
+
+
+
+// set the object's linear velocity
+// impostor.setLinearVelocity(new BABYLON.Vector3(0,1,0))
+
+
+
+
+
+// Angular velocity
+// changes the rotation.
+
+
+// get the object's angular velocity (a B.Quaternion)
+// impostor.getAngularVelocity()
+
+
+// set the object's angular velocity
+// impostor.setAngularVelocity(new B.Quaternion(0,1,0,0))
+
+
+
+// Impulses and forces
+// Applying a force/impulse on a body will change its 
+// velocities (linear and angular) according to the body's properties 
+// (mass is taken into account, for example)
+
+// apply an impulse
+// impostor.applyImpulse(
+// direction and amount of impulse to apply.
+//     new BABYLON.Vector3(10, 10, 0), 
+// where on the body itself the force will be applied
+// Using this in a game of pool - you can hit the ball at various contact point locations and the interaction will vary
+//     sphere.getAbsolutePosition()
+// )
+
+
+
+
+
+
+
+// Radial explosion impulse/force & gravitational fields
+// forces are never applied to impostors that have mass equal 0
+
+
+
+
+
+
+// Collision callbacks
+
+// add a callback function that will be called when an impostor collides 
+// with another impostor. 
+// This is how to change the color of an object if it collides against 
+// the ground.
+
+// sphereImpostor.registerOnPhysicsCollide(groundImpostor, function(main, collided) {
+//     main.object.material.diffuseColor = new B.Color3(Math.random(), Math.random(), Math.random())
+// })
+
+
+
 
 
 
